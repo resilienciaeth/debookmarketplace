@@ -29,15 +29,15 @@ function Navbar() {
         />
       </div>
       <ul className="hidden text-black font-bold nm:flex nm:mr-10 space-x-[4rem] text-[15px]">
-        <div onClick={() => window.open('https://debookmagickey.io/')} className="flex flex-row items-center px-2 cursor-pointer rounded-2xl hover:bg-zinc-900 duration-[600ms]">
+        <div onClick={() => window.open('https://debookmagickey.io/')} className="flex flex-row items-center px-2 cursor-pointer rounded-2xl">
           <FiKey size={30} />
           <li className="p-2 ">Magickey</li>
         </div>
-        <div onClick={() => window.open('https://feather-citrine-09c.notion.site/DEBOOK-MANIFESTO-9425060483794743ba6a10b048970bf5')} className="flex flex-row items-center px-2 cursor-pointer rounded-2xl hover:bg-zinc-900 duration-[600ms]">
+        <div onClick={() => window.open('https://feather-citrine-09c.notion.site/DEBOOK-MANIFESTO-9425060483794743ba6a10b048970bf5')} className="flex flex-row items-center px-2 cursor-pointer rounded-2xl ">
           <BsJournalBookmark size={25} />
           <li className="p-2 cursor-pointer">Manifesto</li>
         </div>
-        <div className="flex flex-row items-center px-2 cursor-pointer rounded-2xl bg-hover:bg-zinc-900 duration-[600ms]">
+        <div className="flex flex-row items-center px-2 cursor-pointer rounded-2xl">
           <SlSocialInstagram size={25} />
           <li className="peer p-2 cursor-pointer">Socials</li>
           <div className="hidden peer-hover:flex top-[3.8rem] absolute hover:flex rounded-2xl

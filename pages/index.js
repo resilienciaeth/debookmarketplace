@@ -66,7 +66,7 @@ function Home() {
           <div className="nm:text-4xl nm:mr-10 text-debook-1">Search bar</div>
         </div>
         <div className="flex justify-center mt-4 flex-wrap">
-          {nfts?.sort(() => Math.random() - 0.5).slice(0, 8).map((nft, index) => (
+          {nfts?.slice(0, 8).map((nft, index) => (
             <NFTCard
 
               nft={{
