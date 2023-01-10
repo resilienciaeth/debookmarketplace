@@ -29,7 +29,7 @@ function Navbar() {
         />
       </div>
       <ul className="hidden text-black font-bold nm:flex nm:mr-10 space-x-[4rem] text-[15px]">
-        <div onClick={() => window.open('')} className="flex flex-row items-center px-2 cursor-pointer rounded-2xl hover:bg-zinc-900 duration-[600ms]">
+        <div onClick={() => window.open('https://debookmagickey.io/')} className="flex flex-row items-center px-2 cursor-pointer rounded-2xl hover:bg-zinc-900 duration-[600ms]">
           <FiKey size={30} />
           <li className="p-2 ">Magickey</li>
         </div>
@@ -49,7 +49,7 @@ function Navbar() {
         </div>
 
         {address && (
-        <button className=" text-white bg-debook-1 text-[15px] rounded-3xl px-4 py-1 font-bold" onClick={() => window.open('/my-debooks1', '_self')}>
+        <button className=" text-white bg-debook-1 text-[15px] rounded-3xl px-4 py-1 font-bold" onClick={() => window.open('/my-debooks', '_self')}>
           My debooks
         </button>
         )}
@@ -67,10 +67,19 @@ function Navbar() {
           <Image alt="logo" src={images.logomenu} width={200} height={100} />
         </div>
         <ul className="pt-16 px-10 uppercase font-bold">
-          <li onClick={() => window.open('https://www.debook.app')} className="p-4 text-[50px]">APP</li>
+          <li onClick={() => window.open('https://debookmagickey.io/')} className="p-4 text-[50px]">MAGICKEY</li>
           <li onClick={() => window.open('https://feather-citrine-09c.notion.site/DEBOOK-MANIFESTO-9425060483794743ba6a10b048970bf5')} className="p-4 text-[50px]">MANIFESTO</li>
           <li onClick={() => window.open('https://www.instagram.com/debook.app')} className="p-4 text-[50px]">Instagram</li>
-          <button onClick={() => window.open('/mint', '_self')} className="uppercase text-[12px] nm:text-[30px] border-black border-2 rounded-[6px] ml-2 mt-4 px-4 py-1 hover:bg-black hover:text-white hover:border-white">BUY MAGICKEY</button>
+          {address && (
+          <button className="uppercase text-[12px] nm:text-[30px] text-white  rounded-[6px] ml-2 mt-4 px-4 py-1 bg-debook-1" onClick={() => window.open('/my-debooks', '_self')}>
+            My debooks
+          </button>
+          )}
+          {!address && (
+          <button className="uppercase text-[12px] nm:text-[30px] border-black border-2 rounded-[6px] ml-2 mt-4 px-4 py-1 hover:bg-black hover:text-white hover:border-white" onClick={connectMetamask}>
+            Connect Wallet
+          </button>
+          )}
         </ul>
       </div>
     </div>

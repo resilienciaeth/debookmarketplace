@@ -2,11 +2,14 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useContract, useNFTs } from '@thirdweb-dev/react';
 import NFTCard from '../components/NFTCard';
 
 import images from '../public/assets';
 
 function Home() {
+  const { contract } = useContract('0x4C50852f241cCC9CD421D8403E4Ab120c6cE9733');
+  const { data: nfts, isLoading, error } = useNFTs(contract, { start: 0, count: 1000 });
   return (
     <div className="font-larken bg-white">
       {/* Welcome */}
@@ -21,48 +24,27 @@ function Home() {
               </div>
             </div>
             {/* NFT Card */}
-            <div className="mt-[5rem] nm:mt-[8rem] mb-10 flex items-start justify-center bg-white nm:w-[50%] nm:h-auto h-[80%]">
+            <div className="mt-[5rem] nm:mt-[6rem] mb-10 flex items-start justify-center bg-white nm:w-[50%] nm:h-auto h-[80%]">
               <div className="w-[290px] nm:w-[480px]  h-[330px] nm:h-[550px] border-2 bg-white rounded-2xl">
                 <div className="h-[55%] flex nm:hidden w-full min-w-full ">
-                  <Image src={images.nftimage} className="rounded-t-[1rem] hidden" objectFit="cover" />
+                  <Image src={images.magickey} className="rounded-t-[1rem] hidden" objectFit="cover" />
                 </div>
                 {/* image desktop */}
-                <div className="h-[55%] hidden nm:flex w-full min-w-full">
-                  <Image src={images.nftcarddesktop} className="rounded-t-[1rem] hidden" objectFit="cover" />
+                <div className="h-[65%] hidden nm:flex w-full min-w-full">
+                  <Image src={images.magickey} className="rounded-t-[1rem] hidden" objectFit="cover" />
                 </div>
                 {/* description */}
-                <div className="h-[45%] flex justify-center flex-col">
-                  <div className="w-full space-x-5 nm:space-x-32 flex justify-around nm:justify-start flex-row px-6 ">
-                    <div className="flex flex-row space-x-4">
-                      <div className="flex nm:hidden">
-                        <Image src={images.author} />
-                      </div>
-                      <div className="nm:flex hidden">
-                        <Image src={images.authordesktop} />
-                      </div>
-                      <div className="flex flex-col items-start justify-center">
-                        <p className="text-[10px] nm:text-[18px] text-black font-larken text-left">
-                          Book's Name
-                        </p>
-                        <p className="text-[10px] nm:text-[15px] text-slate-500 font-larken">
-                          Author's Name
-                        </p>
+                <div className="h-[35%] flex justify-center flex-col">
+                  <div className="w-full space-x-5 nm:space-x-32 flex justify-center flex-row px-6 ">
+                    <div className="flex items-center justify-center flex-row space-x-4">
+                      <div className="text-black font-bold items-center text-[20px] flex justify-center">
+                        <p className="text-center">DEBOOK MAGICKEY - 3333 Digital Collectibles</p>
                       </div>
                     </div>
-                    <div className="flex flex-col text-slate-500 items-center justify-center ">
-                      <p className="text-[10px] text-center nm:text-[18px] font-larken">
-                        Price
-                      </p>
-                      <div className=" border-[1px] border-debook-1">
-                        <p className="text-[8px] nm:text-[16px] px-2 text-debook-1 font-larken">
-                          $30 USDC
-                        </p>
-                      </div>
-                    </div>
+
                   </div>
                   <div className="flex flex-row mt-5 justify-center space-x-10">
-                    <button className="bg-debook-1 text-[12px] nm:text-[18px] font-larken font-bold px-4 py-2 nm:px-6  rounded-3xl">Buy Now</button>
-                    <button className="bg-button-1 text-[12px] nm:text-[18px] text-black font-larken px-4 nm:px-6 py-2 rounded-3xl font-bold">Rent Now</button>
+                    <button onClick={() => window.open('https://debookmagickey.io/')} className="bg-debook-1 text-[12px] nm:text-[18px] font-larken font-bold px-4 py-2 nm:px-6  rounded-3xl">Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -84,15 +66,15 @@ function Home() {
           <div className="nm:text-4xl nm:mr-10 text-debook-1">Search bar</div>
         </div>
         <div className="flex justify-center mt-4 flex-wrap">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+          {nfts?.sort(() => Math.random() - 0.5).slice(0, 8).map((nft, index) => (
             <NFTCard
-              key={`nft-${i}`}
+
               nft={{
-                i,
-                name: `DEBOOK Magickey #${i}`,
-                price: (1000 - i * 0.534).toFixed(2),
-                seller: 'owner',
-                owner: 'owner-1',
+                image: nft.metadata.image,
+                tokenId: nft.metadata.id,
+                name: nft.metadata.name,
+                owner: nft.owner,
+                description: nft.metadata.description,
               }}
             />
           ))}

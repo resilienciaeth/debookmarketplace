@@ -17,6 +17,7 @@ import nftimage1 from './nftimage1.png';
 import iphonedesktop from './mobiledesktop.png';
 import logoheader from './logoheader.png';
 import creator from './ernest.png';
+import magickey from './PROFILEM.png';
 
 export default {
   menu,
@@ -38,5 +39,6 @@ export default {
   iphonedesktop,
   logoheader,
   creator,
+  magickey,
 
 };

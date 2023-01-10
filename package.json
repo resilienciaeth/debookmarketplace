@@ -9,9 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@3rdweb/hooks": "^1.9.2",
     "@nomiclabs/hardhat-ethers": "2.0.5",
     "@nomiclabs/hardhat-waffle": "2.0.3",
     "@openzeppelin/contracts": "4.5.0",
+    "@portabletext/react": "^2.0.0",
+    "@sanity/client": "^4.0.1",
+    "@sanity/image-url": "^1.0.1",
     "@thirdweb-dev/react": "^3.6.9",
     "@thirdweb-dev/sdk": "^3.6.9",
     "aos": "^2.3.4",
@@ -22,10 +26,11 @@
     "ipfs-http-client": "56.0.1",
     "next": "12.1.0",
     "next-fonts": "^1.5.1",
+    "next-sanity": "^4.0.0",
     "next-themes": "0.1.1",
     "npm": "^9.2.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-dropzone": "12.0.4",
     "react-icons": "^4.7.1",
     "web3modal": "1.9.5"
