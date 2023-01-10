@@ -27,7 +27,7 @@ function Home() {
             <div className="mt-[5rem] nm:mt-[6rem] mb-10 flex items-start justify-center bg-white nm:w-[50%] nm:h-auto h-[80%]">
               <div className="w-[290px] nm:w-[480px]  h-[330px] nm:h-[550px] border-2 bg-white rounded-2xl">
                 <div className="h-[55%] flex nm:hidden w-full min-w-full ">
-                  <Image src={images.magickey} className="rounded-t-[1rem] object-cover hidden" />
+                  <Image src={images.magickey} className="rounded-t-[1rem] object-cover flex nm:hidden" />
                 </div>
                 {/* image desktop */}
                 <div className="h-[65%] hidden nm:flex w-full min-w-full">
