@@ -2,7 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { useAddress } from '@thirdweb-dev/react';
+import {
+  useAddress, useListing, useContract, useMar,
+} from '@thirdweb-dev/react';
 import {
   Loader,
 } from '../components/Loader';
@@ -20,7 +22,7 @@ function PaymentBodyCmp({ nft, nftCurrency }) {
       <div className="flexBetweenStart my-5">
         <div className="flex-1 flexStartCenter">
           <div className="relative w-28 h-28">
-            <Image src={nft.image} layout="fill" objectfit="cover" />
+            <Image src={nft.image} objectfit="cover" />
           </div>
           <div className="flexCenterStart flex-col ml-5">
             <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm minlg:text-xl">{shortenAddress(nft.seller)}</p>
@@ -53,15 +55,23 @@ function PaymentBodyCmp({ nft, nftCurrency }) {
   );
 }
 
-function NftDetails() {
+function NftDetails({ tokenId }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [nft, setNft] = useState({
     image: '', tokenId: '', name: '', owner: '',
   });
+
   const address = useAddress();
+
   const [paymentModal, setPaymentModal] = useState(false);
+  const { marketplace } = useContract('0x18c16F3F606f8961aF6C491b758Ef0b70f592890', 'marketplace');
+
+  const { data: listing, error } = useListing(marketplace, (nft.tokenId));
+
   const [successModal, setSuccessModal] = useState(false);
+  const [isForSale, setIsForSale] = useState(true);
+  const [price, setPrice] = useState();
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -70,6 +80,13 @@ function NftDetails() {
 
     setIsLoading(false);
   }, [router.isReady]);
+
+  useEffect(() => {
+    if (!isLoading && !listingError && listing) {
+      setIsForSale(true);
+      setPrice(listing.price);
+    }
+  }, [listing]);
 
   const checkout = async () => {
     await buyNFT(nft);
@@ -114,26 +131,62 @@ function NftDetails() {
 
         </div>
         <div className="flex flex-row sm:flex-col mt-10">
+
+          {nft.owner === address ? (
+            <>
+              {!isForSale ? (
+                <>
+                  <h2 className="text-black">List this NFT for sale</h2>
+                  <input
+                    type="number"
+                    placeholder="Enter a price in ETH"
+                    onChange={(event) => setPrice(event.target.value)}
+                  />
+                  <button onClick={() => handleList(price)}>List</button>
+                </>
+              ) : (
+                <h2 className="text-black">This NFT is already for sale</h2>
+              )}
+            </>
+          ) : isForSale ? (
+            <>
+              <h2> Buy this NFT </h2>
+              <p>
+                Price:
+                {' '}
+                {price}
+                {' '}
+                ETH
+              </p>
+              <button onClick={() => handleBuy(price)}>Buy</button>
+            </>
+          ) : (
+            <h2 className="text-black">This NFT is not for sale</h2>
+          )}
+
           {/* }
-          {address === nft.seller.toLowerCase()
+          {address === nft?.owner && nft.tokenId === listing.id
             ? (
               <p className="font-poppins dark:text-white text-nft-black-1 text-base font-normal border border-gray p-2">
                 No puedes comprar to propio NFT
-
               </p>
-            ) : currentAccount === nft.owner.toLowerCase() ? (
-              <Button
-                btnName="Listear a la venta"
-                classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+            ) : address === !nft?.owner ? (
+              <button
+                className="mr-5 bg-black text-white sm:mr-0 sm:mb-5 rounded-xl"
                 handleClick={() => router.push(`/resell-nft?tokenId=${nft.tokenId}&tokenURI=${nft.tokenURI}`)}
+              >
+                Hola
 
-              />
+              </button>
             ) : (
-              <Button
-                btnName={`Comprar por ${nft.price} ${nftCurrency}`}
-                classStyles="mr-5 sm:mr-0 rounded-xl"
+              <button
+                className="mr-5 bg-black text-white sm:mr-0 rounded-xl"
                 handleClick={() => setPaymentModal(true)}
-              />
+              >
+                Hola que tal
+
+                {() => setPaymentModal(true)}
+              </button>
 
             )}
             */}
@@ -166,7 +219,6 @@ function NftDetails() {
       )}
 
       {successModal && (
-
       <Modal
         header="Pago realizado correctamente"
         body={(

@@ -1,9 +1,9 @@
-import {
+import React, {
   useContext, useEffect, useState, useRef,
 } from 'react';
 import {
   useMarketplace, MediaRenderer, useAddress,
-  useActiveListings, useOwnedNFTs, useContract, useContractMetadata, useMetadata, useNFTs, useNFTDrop, ThirdwebNftMedia,
+  useListings, useOwnedNFTs, useContract, useContractMetadata, useMetadata, useNFTs, ThirdwebNftMedia,
 } from '@thirdweb-dev/react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -18,7 +18,7 @@ import images from '../public/assets';
 const myNFTs = () => {
   const address = useAddress();
 
-  const nftDrop = useContract('0x4C50852f241cCC9CD421D8403E4Ab120c6cE9733', 'nft-drop').contract;
+  const nftDrop = useContract('0xc4dBB75364cF86F7c02234a0374167D0Fc31c797', 'nft-drop').contract;
 
   const { data: ownedNFTs, isLoading, error } = useOwnedNFTs(nftDrop, address);
 
@@ -42,7 +42,7 @@ const myNFTs = () => {
           </div>
         )}
         <div className="mt-3 w-full flex flex-wrap justify-start md:justify-center">
-          {!isLoading && !nfts.length ? (
+          {!isLoading && !ownedNFTs?.length ? (
             <div className="flexCenter p-4 nm:p-16">
               <h1 className="text-3xl text-debook-1">You don't own any debooks.</h1>
             </div>

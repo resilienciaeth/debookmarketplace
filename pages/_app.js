@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
-  const desiredChainId = ChainId.Mainnet;
+  const desiredChainId = ChainId.Goerli;
   return (
     <ThirdwebProvider desiredChainId={desiredChainId}>
       <ThemeProvider
